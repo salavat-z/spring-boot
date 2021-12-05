@@ -142,9 +142,9 @@ public class LiquibaseAutoConfiguration {
 		private void applyCommonBuilderProperties(LiquibaseProperties properties, DataSourceBuilder<?> builder) {
 			builder.username(properties.getUser());
 			builder.password(properties.getPassword());
-			if (StringUtils.hasText(properties.getDriverClassName())) {
-				builder.driverClassName(properties.getDriverClassName());
-			}
+			String errorMsg = "Driver class name is missing and can't be determined from jdbc connection string";
+			Assert.state(StringUtils.hasText(properties.getDriverClassName()), errorMsg);
+			builder.driverClassName(properties.getDriverClassName());
 		}
 
 	}
